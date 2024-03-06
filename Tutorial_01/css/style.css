@@ -1,0 +1,28 @@
+
+  body {
+      width: 100vw;
+      text-align:center;
+  }
+  h1 {
+    margin: 50px 0;
+  }
+
+  .chess-board {
+      display: flex;
+      justify-content: center;
+  }
+
+  .white-div {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #000;
+      background-color: #fff;
+  }
+
+  .black-div {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #000;
+      background-color: #000;
+  }
+  
