@@ -1,0 +1,11 @@
+  body {
+    background: #fff;
+  }
+  h1 {
+    text-align: center;
+    margin: 50px 0;
+  }
+  .diamond {
+    width: 500px;
+    margin: 0 auto;
+  }
