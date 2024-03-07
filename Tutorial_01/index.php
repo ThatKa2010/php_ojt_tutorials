@@ -69,9 +69,7 @@
         echo "</div>";
     }
 
-
     drawChessBoard(8, 8);
     ?>
 </body>
-
 </html>
