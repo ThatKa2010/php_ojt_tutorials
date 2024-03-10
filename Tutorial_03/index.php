@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container">
         <div id="result"></div>
@@ -48,12 +50,14 @@
             <?php
             if (isset($_POST['dob'])) {
                 $dob = $_POST['dob'];
+                $today = new DateTime(date('Y-m-d 00:00:00'));
                 $bday = new DateTime($dob);
-                $today = new Datetime(date('m.d.y'));
                 $diff = $today->diff($bday);
+
                 printf("$('#result').html(' Your age is %d years, %d months and %d days')", $diff->y, $diff->m, $diff->d);
             }
             ?>
+
         });
     </script>
 </body>
