@@ -52,7 +52,7 @@
                 $dob = $_POST['dob'];
                 $today = new DateTime(date('Y-m-d 00:00:00'));
                 $bday = new DateTime($dob);
-                $diff = $today->diff($bday);
+                $diff = $bday->diff($today);
 
                 printf("$('#result').html(' Your age is %d years, %d months and %d days')", $diff->y, $diff->m, $diff->d);
             }
