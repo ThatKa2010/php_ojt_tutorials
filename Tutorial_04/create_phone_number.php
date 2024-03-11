@@ -20,7 +20,27 @@
             if (isset($_GET['submit'])) {
                 $numberArray = isset($_GET['phone']) ? explode(',', $_GET['phone']) : [];
                 echo "<h2>" . createPhoneNumber($numberArray) . "</h2>";
-                }        
+            }        
+            /**
+             * Summary of validatePhoneNumber
+             * @param mixed $phone
+             * @return string
+             */
+            function validatePhoneNumber($phone) 
+            {
+                if (!preg_match('/^[0-9,]+$/', $phone)) {
+                    return "Please fill numbers only.Comma-separate between numbers.";
+                }
+
+                $numbers = explode(',', $phone);
+                foreach ($numbers as $num) {
+                    if ($num < 0 || $num > 9) {
+                        return "Input numbers must be between 0 and 9.";
+                    }
+                }
+
+                return "";
+            }
             /**
              * Summary of createPhoneNumber
              * @param mixed $numberArray
@@ -28,6 +48,11 @@
              */
             function createPhoneNumber($numberArray)
             {
+                // Validate phone number
+                $error = validatePhoneNumber(implode(',', $numberArray));
+                if ($error !== "") {
+                    return "<span style='color: red;'>Error: $error</span>";
+                }
 
                 if (count($numberArray) < 10) {
                     for ($i = count($numberArray); $i < 10; $i++) {
