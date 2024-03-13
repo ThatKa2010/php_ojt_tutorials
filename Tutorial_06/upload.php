@@ -2,7 +2,7 @@
 
 if (isset($_POST["submit"])) {
     if (empty($_POST["folder"]) && empty($_FILES["image"]["name"])) {
-        header("Location: index.php?error=missing_inputs");
+        header("Location: index.php?empty");
         exit;
     } elseif ($_POST['folder'] == "") {
         header("Location: index.php?empty-folder");

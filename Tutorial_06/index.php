@@ -7,15 +7,11 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
     <?php
     if (isset($_GET['error'])) {
         $error = $_GET['error'];
         switch ($error) {
-            case 'missing_inputs':
-                echo "<div class='alert red'>You need to fill folder name and choose image.</div>";
-                break;
             case 'file_too_large':
                 echo "<div class='alert red'>File is too large.File size must be less than or equal 2MB.</div>";
                 break;
@@ -56,14 +52,14 @@
             <label for="folder">Folder Name:</label>
             <input type="text" name="folder" id="folder" placeholder="Enter folder name:">
             <p class="red">
-                <?php if (isset($_GET['empty-folder'])) {
+                <?php if (isset($_GET['empty-folder'])||isset($_GET['empty'])) {
                     echo "please fill folder name!";
                 } ?>
             </p>
             <label for="image">Choose Image</label>
             <input type="file" name="image" id="image">
             <p class="red">
-                <?php if (isset($_GET['empty-img'])) {
+                <?php if (isset($_GET['empty-img'])||isset($_GET['empty'])) {
                     echo "please choose image file!";
                 } ?>
             </p>
@@ -71,10 +67,10 @@
         </form>
     </div>
 
-    <div class="img-con"> <!--to show images-->
+    <div class="img-con">
         <?php
         $directory = 'images/';
-
+        $baseUrl = "localhost/php_ojt_tutorials/Tutorial_06/";
         // Create RecursiveDirectoryIterator
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
@@ -82,8 +78,12 @@
             if ($file->isFile() && in_array(strtolower($file->getExtension()), ['jpg', 'jpeg', 'png'])) {
                 echo '<div class="image">';
                 echo '<img src="' . $file->getPathname() . '" alt="Uploaded Image"><br>';
+                echo '<h6>' . basename($file->getPathname()) . '</h6>';
+                $filePath = str_replace('\\', '/', $file->getPathname());
+                $urlLink = $baseUrl . $file->getPathname();
+                echo '<h6>' . $urlLink . '</h6>';
                 echo '<form action="upload.php" method="post">';
-                echo '<input type="text" name="image_path" value="' . $file->getPathname() . '" readonly>';
+                echo '<input type="hidden" name="image_path" value="' . $file->getPathname() . '" readonly>';
                 echo '<button type="submit" name="delete" class="delete-btn">Delete</button>';
                 echo '</form>';
                 echo '</div>';
