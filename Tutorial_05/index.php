@@ -31,15 +31,15 @@
         echo nl2br($content);
         echo "<hr>";
 
-        //$phpWord = PhpWordIOFactory::load($directory . $file2);
-        //$text = '';
-        //foreach ($phpWord->getSections() as $section) {
-        //    foreach ($section->getElements() as $element) {
-        //        $text .= $element->getText();
-        //    }
-        //}
-        //echo "<h2>DOCUMENT File</h2>";
-        //echo nl2br($text);
+        $phpWord = PhpWordIOFactory::load($directory . $file2);
+        $text = '';
+        foreach ($phpWord->getSections() as $section) {
+            foreach ($section->getElements() as $element) {
+                $text .= $element->getText();
+            }
+        }
+        echo "<h2>DOCUMENT File</h2>";
+        echo nl2br($text);
 
         $reader = Reader::createFromPath($directory . $file, 'r');
         $records = $reader->getRecords();
@@ -53,7 +53,7 @@
                 if ($rowIndex === 0) {
                     echo "<strong>";
                 }
-                echo "<p class='padding:15px;'>".$cell."</p>";
+                echo "<p class='padding:15px;'>" . $cell . "</p>";
                 if ($rowIndex === 0) {
                     echo "</strong>";
                 }
@@ -98,5 +98,4 @@
         ?>
     </div>
 </body>
-
 </html>
