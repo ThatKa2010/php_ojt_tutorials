@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
     <div class="container">
         <?php
@@ -17,19 +15,17 @@
 
         use PhpOffice\PhpWord\IOFactory as PhpWordIOFactory;
         use PhpOffice\PhpSpreadsheet\IOFactory as SpreadsheetIOFactory;
-        use League\Csv\Reader;
 
         $directory = 'files/';
 
         $file = 'sample.csv';
         $file1 = 'sample.txt';
-        $file2 = 'sample.doc';
+        $file2 = 'sample.docx';
         $file3 = 'sample.xlsx';
 
         $content = file_get_contents($directory . $file1);
         echo "<h2>TEXT File</h2>";
         echo nl2br($content);
-        echo "<hr>";
 
         $phpWord = PhpWordIOFactory::load($directory . $file2);
         $text = '';
@@ -41,28 +37,31 @@
         echo "<h2>DOCUMENT File</h2>";
         echo nl2br($text);
 
-        $reader = Reader::createFromPath($directory . $file, 'r');
-        $records = $reader->getRecords();
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Csv');
+        $spreadSheet = $reader->load($directory . $file);
+        $workSheet = $spreadSheet->getActiveSheet();
         echo "<h2>CSV File</h2>";
         echo "<table>";
-        $rowIndex = 0;
-        foreach ($records as $record) {
+        foreach ($workSheet->getRowIterator() as $row) {
             echo "<tr>";
-            foreach ($record as $cell) {
-                echo "<td>";
-                if ($rowIndex === 0) {
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(FALSE);
+            foreach ($cellIterator as $col) {
+                if ($rowIndex <= 1) {
+                    echo "<td style='border-bottom: 1px solid #e3e3e3;'>";
+                } else {
+                    echo "<td>";
+                }
+                if ($rowIndex == 0) {
                     echo "<strong>";
                 }
-                echo "<p class='padding:15px;'>" . $cell . "</p>";
-                if ($rowIndex === 0) {
+                echo $col->getValue();
+                if ($rowIndex == 0) {
                     echo "</strong>";
                 }
                 echo "</td>";
             }
             echo "</tr>";
-            if ($rowIndex < 2) {
-                echo "<tr style='border-bottom: 1px solid black;'></tr>";
-            }
             $rowIndex++;
         }
         echo "</table>";
@@ -78,12 +77,12 @@
             echo "<tr>";
             foreach ($cellIterator as $cell) {
                 if ($rowIndex <= 1) {
-                    echo "<td style='border-bottom: 1px solid black;'>";
+                    echo "<td style='border-bottom: 1px solid #e3e3e3;'>";
                 } else {
                     echo "<td>";
                 }
                 if ($rowIndex == 0) {
-                    echo "<strong>"; // Making the first row bold
+                    echo "<strong>";
                 }
                 echo $cell->getValue();
                 if ($rowIndex == 0) {
