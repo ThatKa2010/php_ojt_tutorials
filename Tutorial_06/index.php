@@ -80,7 +80,7 @@
                 echo '<img src="' . $file->getPathname() . '" alt="Uploaded Image"><br>';
                 echo '<h6>' . basename($file->getPathname()) . '</h6>';
                 $filePath = str_replace('\\', '/', $file->getPathname());
-                $urlLink = $baseUrl . $file->getPathname();
+                $urlLink = $baseUrl . $filePath;
                 echo '<h6>' . $urlLink . '</h6>';
                 echo '<form action="upload.php" method="post">';
                 echo '<input type="hidden" name="image_path" value="' . $file->getPathname() . '" readonly>';
