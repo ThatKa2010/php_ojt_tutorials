@@ -17,6 +17,9 @@ td {
 }
 
 h2 {
-  padding-bottom: 20px;
+  padding: 30px 0px 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+h2:first-child {
+  padding-top: 0;
 }
