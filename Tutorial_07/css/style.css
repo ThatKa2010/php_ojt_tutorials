@@ -9,9 +9,11 @@
   background-color: #e3e3e3;
   text-align: center;
 }
+
 .ttl h1 {
   font-size: 30px;
 }
+
 form {
   padding: 10px 20px;
 }
@@ -53,12 +55,20 @@ p {
   text-align: center;
 }
 
+.show-qr {
+  max-width: 1080px;
+  margin: 0 auto;
+  background-color: #e3e3e3;
+}
+
+.show-qr h3 {
+  padding: 10px;
+  font-size: 30px;
+}
+
 .img-con {
   display: flex;
   flex-wrap: wrap;
-  max-width: 1080px;
-  background-color: #e3e3e3;
-  margin: 0 auto;
 }
 
 .image {
