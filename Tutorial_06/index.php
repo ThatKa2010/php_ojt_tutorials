@@ -70,7 +70,7 @@
     <div class="img-con">
         <?php
         $directory = 'images/';
-        $baseUrl = "localhost/php_ojt_tutorials/Tutorial_06/";
+        $baseUrl = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         // Create RecursiveDirectoryIterator
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
