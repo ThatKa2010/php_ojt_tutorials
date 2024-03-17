@@ -70,7 +70,6 @@
     <div class="img-con">
         <?php
         $directory = 'images/';
-        $baseUrl = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         // Create RecursiveDirectoryIterator
         $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory));
 
@@ -80,7 +79,8 @@
                 echo '<img src="' . $file->getPathname() . '" alt="Uploaded Image"><br>';
                 echo '<h6>' . basename($file->getPathname()) . '</h6>';
                 $filePath = str_replace('\\', '/', $file->getPathname());
-                $urlLink = $baseUrl . $filePath;
+                $urlLink =$_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . $filePath;
+
                 echo '<h6>' . $urlLink . '</h6>';
                 echo '<form action="upload.php" method="post">';
                 echo '<input type="hidden" name="image_path" value="' . $file->getPathname() . '" readonly>';
