@@ -63,6 +63,16 @@
                     echo "please choose image file!";
                 } ?>
             </p>
+            <p class="red">
+                <?php if (isset($_GET['duplicate-error'])){
+                    echo $_GET['duplicate-error'];
+                } ?>
+            </p>
+            <p class="red">
+                <?php if (isset($_GET['validation-error'])){
+                    echo $_GET['validation-error'];
+                } ?>
+            </p>
             <input type="submit" value="Upload Image" name="submit">
         </form>
     </div>
