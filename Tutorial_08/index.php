@@ -70,9 +70,9 @@
                         // output data of each row
                         while ($row = $result->fetch_assoc()) {
                             if ($row['is_published'] == 1) {
-                                $status = "is published";
+                                $status = "Published";
                             } else {
-                                $status = "not published";
+                                $status = "Unpublished";
                             }
                             echo "<tr>
                         <td>" . $row["id"] . "</td>
