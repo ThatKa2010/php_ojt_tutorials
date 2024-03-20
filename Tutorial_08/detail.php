@@ -36,7 +36,7 @@
                                 <?php echo $row["title"]; ?>
                             </h5>
                             <p class="card-text">
-                                <?php echo $row["is_published"] ? '<i class="mr-3">Publish at</i>' : '<i class="mr-3">not Publish</i>';
+                                <?php echo $row["is_published"] ? '<i class="mr-3">Publish at</i>' : '<i class="mr-3">Unpublished</i>';
                                 echo date("M d, Y", strtotime($row["created_datetime"])); ?>
                             </p>
                             <p class="card-text">

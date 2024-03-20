@@ -89,7 +89,7 @@
                         }
 
                     } else {
-                        echo "<tr><td colspan='3'>No records found</td></tr>";
+                        echo "<tr><td colspan='6'>No records found!</td></tr>";
                     }
                     $conn->close();
                     ?>
