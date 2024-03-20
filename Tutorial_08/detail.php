@@ -20,7 +20,7 @@
             $id = $_GET['id'];
 
             // Prepare SQL statement
-            $stmt = $conn->prepare("SELECT title, content, created_datetime, is_published FROM post WHERE id = ?");
+            $stmt = $conn->prepare("SELECT title, content, created_datetime, is_published FROM posts WHERE id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
