@@ -1,7 +1,7 @@
 <?php
 include ("db_connection.php");
 
-$sql = "SELECT DAYNAME(created_datetime) AS day_name, COUNT(*) AS post_count FROM post GROUP BY DAYNAME(created_datetime)";
+$sql = "SELECT DAYNAME(created_datetime) AS day_name, COUNT(*) AS post_count FROM posts GROUP BY DAYNAME(created_datetime)";
 $result = $conn->query($sql);
 
 $data = array();
@@ -32,7 +32,7 @@ while ($row = $result->fetch_assoc()) {
         <div class="col-9 offset-1 mt-5">
             <a href="index.php" class="btn btn-success">back</a>
             <div class="float-right">
-                <a href="weekly.php" class="btn btn-outline-success">Weekly</a>
+                <a href="weekly.php" class="btn btn-outline-success bg-success text-white">Weekly</a>
                 <a href="monthly.php" class="btn btn-outline-success">Monthly</a>
                 <a href="yearly.php" class="btn btn-outline-success">Yearly</a>
             </div>
@@ -49,9 +49,9 @@ while ($row = $result->fetch_assoc()) {
             data: {
                 labels: <?php echo json_encode($daysOfWeek); ?>,
                 datasets: [{
-                    label: 'Weekly created Posts',
+                    label: '#Weekly Created Posts',
                     data: <?php echo json_encode(array_values($data)); ?>,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)',
                     borderColor: 'rgba(54, 162, 235, 1)',
                     borderWidth: 1
                 }]

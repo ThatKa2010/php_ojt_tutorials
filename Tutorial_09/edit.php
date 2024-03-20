@@ -21,7 +21,7 @@
 
                     // Get post data based on ID
                     $id = $_GET['id'];
-                    $sql = "SELECT * FROM post WHERE id = ?";
+                    $sql = "SELECT * FROM posts WHERE id = ?";
                     $stmt = $conn->prepare($sql);
                     $stmt->bind_param("i", $id);
                     $stmt->execute();
@@ -38,15 +38,15 @@
                         <form action='edit.php?id=<?php echo $id; ?>' method='POST' class='p-3'>
                             <div class='form-group'>
                                 <label for='title'>Title:</label>
-                                <input type='text' class='form-control' id='title' name='title' value='<?php echo $title; ?>'>
-                                <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && empty ($_POST["content"])) {
+                                <input type='text' class='form-control' id='title' name='title' value='<?php echo isset($_POST['title'])?$_POST['title']:$title; ?>'>
+                                <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && empty ($_POST["title"])) {
                                     echo "<small class='text-danger'>Title is required</small>";
                                 } ?>
 
                             </div>
                             <div class='form-group'>
                                 <label for='content'>Content:</label>
-                                <textarea class='form-control' id='content' name='content' rows='5'><?php echo $content; ?></textarea>
+                                <textarea class='form-control' id='content' name='content' rows='5'><?php echo isset($_POST['content'])?$_POST['content']:$content; ?></textarea>
                                 <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && empty ($_POST["content"])) {
                                     echo "<small class='text-danger'>Content is required</small>";
                                 } ?>
@@ -71,17 +71,15 @@
                         $publish = isset ($_POST['publish']) ? 1 : 0;
 
                         if (empty ($title)) {
-                            echo "<div class='container mt-3'><div class='alert alert-danger' role='alert'>Title feild is required!</div></div>";
                             exit();
                         }
 
                         if (empty ($content)) {
-                            echo "<div class='container mt-3'><div class='alert alert-danger' role='alert'>Content feild is required!</div></div>";
                             exit();
                         }
 
                         // Update SQL statement
-                        $sql_update = "UPDATE post SET title=?, content=?, is_published=? WHERE id=?";
+                        $sql_update = "UPDATE posts SET title=?, content=?, is_published=? WHERE id=?";
                         $stmt_update = $conn->prepare($sql_update);
                         $stmt_update->bind_param("ssii", $title, $content, $publish, $id);
 

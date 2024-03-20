@@ -7,9 +7,10 @@ $start = ($page - 1) * $per_page;
 // Search functionality
 if (isset ($_GET['search'])) {
     $search = $_GET['search'];
-    $sql = "SELECT * FROM post WHERE title LIKE '%$search%' OR content LIKE '%$search%'";
-} else {
-    $sql = "SELECT * FROM post LIMIT $start, $per_page";
+    $sql = "SELECT * FROM posts WHERE title LIKE '%$search%' OR content LIKE '%$search%'";
+}
+if (isset ($_GET['search']) == "" || empty ($_GET['search'])) {
+    $sql = "SELECT * FROM posts LIMIT $start, $per_page";
 }
 
 // Handle deletion
@@ -25,24 +26,12 @@ if (isset ($_GET['delete_id']) && is_numeric($_GET['delete_id'])) {
     </script>";
 }
 
-// Perform deletion from database
-if (isset ($_GET['confirmed_delete_id']) && is_numeric($_GET['confirmed_delete_id'])) {
-    $confirmed_delete_id = $_GET['confirmed_delete_id'];
-    $sql_delete = "DELETE FROM post WHERE id = $confirmed_delete_id";
-    if ($conn->query($sql_delete) === TRUE) {
-        echo "<div class='alert alert-success' role='alert'>Successfully has been deleted.</div>";
-    } else {
-        echo "<div class='alert alert-danger' role='alert'>Error deleting entry: " . $conn->error . "</div>";
-    }
-}
-
 // Retrieve data from the database
 $result = $conn->query($sql);
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Posts</title>
@@ -59,14 +48,27 @@ $result = $conn->query($sql);
                 <a href="weekly.php" class="btn btn-primary my-3">Graph</a>
             </div>
             <form action="index.php" method="GET" class="col-4 mt-3 d-flex">
-                <input type="text" name="search" class="form-control" placeholder="Type your keyword Here">
+                <input type="text" name="search" class="form-control" placeholder="Type your keyword Here" value="<?php echo isset ($_GET['search']) ? $_GET['search'] : ""; ?>">
                 <div><button type="submit" class="btn btn-primary m-0">Search</button></div>
             </form>
         </div>
         <div class="list">
             <?php
+            // Perform deletion from database
+            if (isset ($_GET['confirmed_delete_id']) && is_numeric($_GET['confirmed_delete_id'])) {
+                $confirmed_delete_id = $_GET['confirmed_delete_id'];
+                $sql_delete = "DELETE FROM posts WHERE id = $confirmed_delete_id";
+                if ($conn->query($sql_delete) === TRUE) {
+                    echo "<div class='alert alert-success' role='alert'>Successfully has been deleted.</div>";
+                } else {
+                    echo "<div class='alert alert-danger' role='alert'>Error deleting entry: " . $conn->error . "</div>";
+                }
+            }
+            if (isset ($_GET['success'])) {
+                echo "<div class='alert alert-success' role='alert'>" . $_GET['success'] . "</div>";
+            }
             if ($result->num_rows > 0) {
-                echo "<h2>Data from Database</h2>";
+                echo "<h2>Post Lists</h2>";
                 echo "<table class='table'>";
                 echo "<thead><tr><th>ID</th><th>Title</th><th>Content</th><th>Is Published</th><th>Created Date</th><th>Actions</th></tr></thead>";
                 echo "<tbody>";
@@ -94,7 +96,7 @@ $result = $conn->query($sql);
         </div>
         <?php
         // Pagination links
-        $sql = "SELECT COUNT(*) AS total FROM post";
+        $sql = "SELECT COUNT(*) AS total FROM posts";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $total_pages = ceil($row["total"] / $per_page);

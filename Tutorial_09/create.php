@@ -16,14 +16,14 @@
                 <form action="create.php" method="POST" class="p-3">
                     <div class="form-group">
                         <label for="title">Title:</label>
-                        <input type="text" class="form-control" id="title" name="title">
+                        <input type="text" class="form-control" id="title" name="title" value="<?php echo isset ($_POST['title']) ? $_POST['title'] : "";?>">
                         <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && empty ($_POST["title"])) {
                             echo "<small class='text-danger'>Title is required</small>";
                         } ?>
                     </div>
                     <div class="form-group">
                         <label for="content">Content:</label>
-                        <textarea class="form-control" id="content" name="content" rows="5"></textarea>
+                        <textarea class="form-control" id="content" name="content" rows="5"><?php echo isset ($_POST['content']) ? $_POST['content'] : "";?></textarea>
                         <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && empty ($_POST["content"])) {
                             echo "<small class='text-danger'>Content is required</small>";
                         } ?>
@@ -51,17 +51,15 @@
         $publish = isset ($_POST['publish']) ? 1 : 0;
 
         if (empty ($title)) {
-            echo "<div class='container mt-3'><div class='alert alert-danger' role='alert'>Title feild is required!</div></div>";
             exit();
         }
 
         if (empty ($content)) {
-            echo "<div class='container mt-3'><div class='alert alert-danger' role='alert'>Content feild is required!</div></div>";
             exit();
         }
 
         // Prepare SQL statement
-        $sql = "INSERT INTO post (title, content, is_published) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO posts (title, content, is_published) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssi", $title, $content, $publish);
 
