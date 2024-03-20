@@ -12,26 +12,35 @@ if (isset ($_GET['search'])) {
 if (isset ($_GET['search']) == "" || empty ($_GET['search'])) {
     $sql = "SELECT * FROM posts LIMIT $start, $per_page";
 }
-
 // Handle deletion
 if (isset ($_GET['delete_id']) && is_numeric($_GET['delete_id'])) {
     $delete_id = $_GET['delete_id'];
     // JavaScript confirmation dialog box
     echo "<script>
-        if(confirm('Are you sure you want to delete?')) {
-            window.location.href = 'index.php?confirmed_delete_id=$delete_id';
-        } else {
-            window.location.href = 'index.php';
-        }
-    </script>";
+                    if(confirm('Are you sure you want to delete?')) {
+                        window.location.href = 'index.php?confirmed_delete_id=$delete_id';
+                    } else {
+                        window.location.href = 'index.php';
+                    }
+                </script>";
 }
-
+// Perform deletion from database
+if (isset ($_GET['confirmed_delete_id']) && is_numeric($_GET['confirmed_delete_id'])) {
+    $confirmed_delete_id = $_GET['confirmed_delete_id'];
+    $sql_delete = "DELETE FROM posts WHERE id = $confirmed_delete_id";
+    if ($conn->query($sql_delete) === TRUE) {
+        echo "<div class='alert alert-success col-8 offset-2 mt-3' role='alert'>Successfully has been deleted.</div>";
+    } else {
+        echo "<div class='alert alert-danger' role='alert'>Error deleting entry: " . $conn->error . "</div>";
+    }
+}
 // Retrieve data from the database
 $result = $conn->query($sql);
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Posts</title>
@@ -54,16 +63,6 @@ $result = $conn->query($sql);
         </div>
         <div class="list">
             <?php
-            // Perform deletion from database
-            if (isset ($_GET['confirmed_delete_id']) && is_numeric($_GET['confirmed_delete_id'])) {
-                $confirmed_delete_id = $_GET['confirmed_delete_id'];
-                $sql_delete = "DELETE FROM posts WHERE id = $confirmed_delete_id";
-                if ($conn->query($sql_delete) === TRUE) {
-                    echo "<div class='alert alert-success' role='alert'>Successfully has been deleted.</div>";
-                } else {
-                    echo "<div class='alert alert-danger' role='alert'>Error deleting entry: " . $conn->error . "</div>";
-                }
-            }
             if (isset ($_GET['success'])) {
                 echo "<div class='alert alert-success' role='alert'>" . $_GET['success'] . "</div>";
             }
@@ -90,7 +89,7 @@ $result = $conn->query($sql);
                 }
                 echo "</tbody></table>";
             } else {
-                echo "<h2>No records found</h2>";
+                echo "<h2 class='text-center'>No records found</h2>";
             }
             ?>
         </div>

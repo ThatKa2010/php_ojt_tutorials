@@ -1,4 +1,5 @@
 <?php
+include_once ("db_connection.php");
 $create_sql = "CREATE TABLE posts (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
@@ -13,4 +14,5 @@ if ($conn->query($create_sql) === TRUE) {
 } else {
     echo "Error creating table: " . $conn->error;
 }
+$conn->close();
 ?>
