@@ -54,7 +54,7 @@
                     //  perform deletion from database
                     if (isset ($_GET['confirmed_delete_id']) && is_numeric($_GET['confirmed_delete_id'])) {
                         $confirmed_delete_id = $_GET['confirmed_delete_id'];
-                        $sql_delete = "DELETE FROM post WHERE id = $confirmed_delete_id";
+                        $sql_delete = "DELETE FROM posts WHERE id = $confirmed_delete_id";
                         if ($conn->query($sql_delete) === TRUE) {
                             echo "<div class='alert alert-success' role='alert'>Successfully has been deleted.</div>";
                         } else {
@@ -63,16 +63,16 @@
                     }
 
                     // Query to retrieve data
-                    $sql = "SELECT * FROM post LIMIT $start, $per_page";
+                    $sql = "SELECT * FROM posts LIMIT $start, $per_page";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
                         // output data of each row
                         while ($row = $result->fetch_assoc()) {
                             if ($row['is_published'] == 1) {
-                                $status = "is published";
+                                $status = "Published";
                             } else {
-                                $status = "not published";
+                                $status = "Unpublished";
                             }
                             echo "<tr>
                         <td>" . $row["id"] . "</td>
@@ -89,7 +89,7 @@
                         }
 
                     } else {
-                        echo "<tr><td colspan='3'>No records found</td></tr>";
+                        echo "<tr><td colspan='6'>No records found!</td></tr>";
                     }
                     $conn->close();
                     ?>
@@ -100,7 +100,7 @@
         <?php
         // Pagination links
         include 'db_connection.php';
-        $sql = "SELECT COUNT(*) AS total FROM post";
+        $sql = "SELECT COUNT(*) AS total FROM posts";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
         $total_pages = ceil($row["total"] / $per_page);

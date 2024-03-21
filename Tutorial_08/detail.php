@@ -20,7 +20,7 @@
             $id = $_GET['id'];
 
             // Prepare SQL statement
-            $stmt = $conn->prepare("SELECT title, content, created_datetime, is_published FROM post WHERE id = ?");
+            $stmt = $conn->prepare("SELECT title, content, created_datetime, is_published FROM posts WHERE id = ?");
             $stmt->bind_param("i", $id);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -36,7 +36,7 @@
                                 <?php echo $row["title"]; ?>
                             </h5>
                             <p class="card-text">
-                                <?php echo $row["is_published"] ? '<i class="mr-3">Publish at</i>' : '<i class="mr-3">not Publish</i>';
+                                <?php echo $row["is_published"] ? '<i class="mr-3">Publish at</i>' : '<i class="mr-3">Unpublished</i>';
                                 echo date("M d, Y", strtotime($row["created_datetime"])); ?>
                             </p>
                             <p class="card-text">
