@@ -1,24 +1,22 @@
 <?php
 include ("db_connection.php");
 
-// Query to get the minimum date when the first data was created
-$sql_min_date = "SELECT MIN(created_datetime) AS min_date FROM posts";
-$result_min_date = $conn->query($sql_min_date);
-$row_min_date = $result_min_date->fetch_assoc();
-$start_date = $row_min_date['min_date'];
+$start_date = "2024-03-01";
 
 $labels = array();
 $current_date = new DateTime($start_date);
-for ($i = 0; $i < 30; $i++) {
+
+// Loop for 31 days starting from March 1, 2024
+for ($i = 0; $i < 31; $i++) {
     $labels[] = $current_date->format("m-d-Y");
     $current_date->modify("+1 day");
 }
 
-// Query to get post count for each date
+// Query to get post count for each date in March 2024
 $sql = "SELECT DATE_FORMAT(created_datetime, '%m-%d-%Y') AS date_formatted, COUNT(*) AS post_count 
         FROM posts 
         WHERE created_datetime >= '$start_date'
-        GROUP BY DATE_FORMAT(created_datetime, '%m-%d-%Y')";
+        AND created_datetime < '2024-04-01'";
 $result = $conn->query($sql);
 
 $data = array();
