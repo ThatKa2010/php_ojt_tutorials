@@ -2,12 +2,13 @@
 include ("db_connection.php");
 
 $start_date = "2024-03-01";
+$end_date = "2024-03-31";
 
 $labels = array();
 $current_date = new DateTime($start_date);
 
-// Loop for 31 days starting from March 1, 2024
-for ($i = 0; $i < 31; $i++) {
+// Loop for each day in March 2024
+while ($current_date <= new DateTime($end_date)) {
     $labels[] = $current_date->format("m-d-Y");
     $current_date->modify("+1 day");
 }
@@ -16,7 +17,8 @@ for ($i = 0; $i < 31; $i++) {
 $sql = "SELECT DATE_FORMAT(created_datetime, '%m-%d-%Y') AS date_formatted, COUNT(*) AS post_count 
         FROM posts 
         WHERE created_datetime >= '$start_date'
-        AND created_datetime < '2024-04-01'";
+        AND created_datetime <= '$end_date'
+        GROUP BY DATE(created_datetime)";
 $result = $conn->query($sql);
 
 $data = array();
