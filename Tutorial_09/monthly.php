@@ -18,7 +18,7 @@ $sql = "SELECT DATE_FORMAT(created_datetime, '%m-%d-%Y') AS date_formatted, COUN
         FROM posts 
         WHERE created_datetime >= '$start_date'
         AND created_datetime <= '$end_date'
-        GROUP BY DATE(created_datetime)";
+        GROUP BY date_formatted";
 $result = $conn->query($sql);
 
 $data = array();
