@@ -14,44 +14,44 @@
     if (isset ($_SESSION['user_id'])) {
         // User is logged in, show authenticated content
         echo '
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid d-flex justify-content-between px-5">
-    <a class="navbar-brand" href="#">Home</a>
-    <div class="dropdown me-5">
-      <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-      <img src="' . ($_SESSION['user_img'] != null ? $_SESSION['user_img'] : 'img/user.png') . '" alt="Dropdown Icon" style="width:60px;">
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" href="profile.php">Profile</a></li>
-        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+                <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid d-flex justify-content-between px-5">
+                    <a class="navbar-brand" href="#">Home</a>
+                    <div class="dropdown me-5">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="' . ($_SESSION['user_img'] != null ? $_SESSION['user_img'] : 'img/user.png') . '" alt="Dropdown Icon" style="width:60px;">
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="profile.php">Profile</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Logout</a></li>
+                    </ul>
+                    </div>
+                </div>
+                </nav>
 
-<div class="container mt-5">
-  <div class="col-6 offset-4">
-    <h1>Welcome ' . $_SESSION['username'] . '!</h1>
-  </div>
-</div>';
+                <div class="container mt-5">
+                <div class="col-6 offset-4">
+                    <h1>Welcome ' . $_SESSION['username'] . '!</h1>
+                </div>
+                </div>';
     } else {
         // User is not logged in, show default content
         echo '
-<nav class="navbar navbar-light bg-light">
-  <div class="container-fluid d-flex justify-content-between px-5">
-    <a class="navbar-brand" href="#">Home</a>
-    <div>
-      <a href="login.php" class="btn btn-primary">Login</a>
-      <a href="register.php" class="btn btn-primary">Register</a>
-    </div>
-  </div>
-</nav>
+                <nav class="navbar navbar-light bg-light">
+                <div class="container-fluid d-flex justify-content-between px-5">
+                    <a class="navbar-brand" href="#">Home</a>
+                    <div>
+                    <a href="login.php" class="btn btn-primary">Login</a>
+                    <a href="register.php" class="btn btn-primary">Register</a>
+                    </div>
+                </div>
+                </nav>
 
-<div class="container mt-5">
-  <div class="col-6 offset-4">
-    <h1>Welcome From My Website</h1>
-  </div>
-</div>';
+                <div class="container mt-5">
+                <div class="col-6 offset-4">
+                    <h1>Welcome From My Website</h1>
+                </div>
+                </div>';
     }
     ?>
     <!-- Bootstrap JavaScript Bundle with Popper -->

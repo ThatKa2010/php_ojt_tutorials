@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset ($_POST["email"])) {
         $store_token_stmt->execute();
 
         // Send an email to the user with the password reset link
-        $reset_link = "http://localhost/Tutorial_10/reset_password.php?token=$token";
+        $reset_link = "http://".$_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/reset_password.php?token=$token";
         $to = $email;
         $subject = "Password Reset";
         $message = "Please click the following link to reset your password: $reset_link";
